@@ -29,5 +29,6 @@
 		"status": "gulp status",
 		"upgrade": "gulp upgrade",
 		"watch": "gulp watch"
-	}
+	},
+	"dependencies": {}
 }
