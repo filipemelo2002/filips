@@ -1,0 +1,15 @@
+
+body {
+  background-color: var(--body-bg, $body-bg);
+  font-family: var(--font-family-base, $font-family-base);
+}
+
+#wrapper {
+  --portlet-topper-bg: var(--primary);
+  --portlet-topper-color: var(--white);
+  --portlet-topper-link-color: var(--portlet-topper-color);
+
+  background-color: var(--body-bg, $body-bg);
+  color: var(--body-color, $body-color);
+  font-size: var(--font-size-base, $font-size-base);
+}
