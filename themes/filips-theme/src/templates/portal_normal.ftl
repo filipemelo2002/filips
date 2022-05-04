@@ -8,10 +8,7 @@
 	<title>${html_title}</title>
 
 	<meta content="initial-scale=1.0, width=device-width" name="viewport" />
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;700&display=swap" rel="stylesheet">
-	<script src="https://cdn.tailwindcss.com"></script>
+
 	<@liferay_util["include"] page=top_head_include />
 </head>
 
@@ -21,57 +18,87 @@
 
 <@liferay_util["include"] page=body_top_include />
 
-<@liferay.control_menu />
+<div class="d-flex flex-column min-vh-100">
+	<@liferay.control_menu />
 
-<div class="container-fluid" id="wrapper">
-	<header id="banner" role="banner">
-		<div id="heading">
-			<div aria-level="1" class="site-title" role="heading">
-				<a class="${logo_css_class}" href="${site_default_url}" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
-					<img alt="${logo_description}" height="${site_logo_height}" src="${site_logo}" width="${site_logo_width}" />
-				</a>
+	<div class="d-flex flex-column flex-fill" id="wrapper">
+		<#if show_header>
+			<header id="banner">
+				<div class="navbar navbar-classic navbar-top py-3">
+					<div class="container-fluid container-fluid-max-xl user-personal-bar">
+						<div class="align-items-center autofit-row">
+							<a class="${logo_css_class} align-items-center d-md-inline-flex d-sm-none d-none logo-md" href="${site_default_url}" title="<@liferay.language_format arguments="" key="go-to-x" />">
+								<img alt="${logo_description}" class="mr-2" height="56" src="${site_logo}" />
 
-				<#if show_site_name>
-					<span class="site-name" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
-						${site_name}
-					</span>
-				</#if>
-			</div>
-		</div>
+								<#if show_site_name>
+									<h2 class="font-weight-bold h2 mb-0 text-dark" role="heading" aria-level="1">${site_name}</h2>
+								</#if>
+							</a>
 
-		<#if !is_signed_in>
-			<a data-redirect="${is_login_redirect_required?string}" href="${sign_in_url}" id="sign-in" rel="nofollow">${sign_in_text}</a>
+							<#assign preferences = freeMarkerPortletPreferences.getPreferences({"portletSetupPortletDecoratorId": "barebone", "destination": "/search"}) />
+
+							<div class="autofit-col autofit-col-expand">
+								<#if show_header_search>
+									<div class="justify-content-md-end mr-4 navbar-form" role="search">
+										<@liferay.search_bar default_preferences="${preferences}" />
+									</div>
+								</#if>
+							</div>
+
+							<div class="autofit-col">
+								<@liferay.user_personal_bar />
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="navbar navbar-classic navbar-expand-md navbar-light pb-3">
+					<div class="container-fluid container-fluid-max-xl">
+						<a class="${logo_css_class} align-items-center d-inline-flex d-md-none logo-xs" href="${site_default_url}" rel="nofollow">
+							<img alt="${logo_description}" class="mr-2" height="56" src="${site_logo}" />
+
+							<#if show_site_name>
+								<h2 class="font-weight-bold h2 mb-0 text-dark">${site_name}</h2>
+							</#if>
+						</a>
+
+						<#include "${full_templates_path}/navigation.ftl" />
+					</div>
+				</div>
+			</header>
 		</#if>
 
-		<#if has_navigation && is_setup_complete>
-			<#include "${full_templates_path}/navigation.ftl" />
-		</#if>
-	</header>
+		<section class="${portal_content_css_class} flex-fill" id="content">
+			<h2 class="sr-only" role="heading" aria-level="1">${the_title}</h2>
 
-	<section id="content">
-		<h2 class="hide-accessible" role="heading" aria-level="1">${the_title}</h2>
-
-		<#if selectable>
-			<@liferay_util["include"] page=content_include />
-		<#else>
-			${portletDisplay.recycle()}
-
-			${portletDisplay.setTitle(the_title)}
-
-			<@liferay_theme["wrap-portlet"] page="portlet.ftl">
+			<#if selectable>
 				<@liferay_util["include"] page=content_include />
-			</@>
-		</#if>
-	</section>
+			<#else>
+				${portletDisplay.recycle()}
 
-	<footer id="footer" role="contentinfo">
-		<p class="powered-by">
-			<@liferay.language_format
-				arguments='<a href="http://www.liferay.com" rel="external">Liferay</a>'
-				key="powered-by-x"
-			/>
-		</p>
-	</footer>
+				${portletDisplay.setTitle(the_title)}
+
+				<@liferay_theme["wrap-portlet"] page="portlet.ftl">
+					<@liferay_util["include"] page=content_include />
+				</@>
+			</#if>
+		</section>
+
+		<#if show_footer>
+			<footer id="footer" role="contentinfo">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12 text-center text-md-left">
+							<@liferay.language_format
+								arguments='<a class="text-white" href="http://www.liferay.com" rel="external">Liferay</a>'
+								key="powered-by-x"
+							/>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</#if>
+	</div>
 </div>
 
 <@liferay_util["include"] page=body_bottom_include />
