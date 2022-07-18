@@ -8,7 +8,7 @@ const SearchContainer = () => {
         <div class="input-group-item">
           <input
             class="form-control input-group-inset input-group-inset-after"
-            placeholder="Search for songs on Spotify..."
+            placeholder="Search for songs on Deezer..."
             type="text"
           />
           <span
