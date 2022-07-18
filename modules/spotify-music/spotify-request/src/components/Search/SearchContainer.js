@@ -1,22 +1,33 @@
-import React from 'react';
+import React, {useRef} from 'react';
+import { searchTracks } from '../../services/deezerService';
 
 
 const SearchContainer = () => {
+  const inputRef = useRef();
+
+  const onClick = async (event) => {
+    event.preventDefault();
+
+    const response = await searchTracks(inputRef.current.value);
+
+    console.log(response);
+  }
   return (
 		<div className='mx-auto container mt-3'>
-      <div class="input-group">
-        <div class="input-group-item">
+      <div className="input-group">
+        <div className="input-group-item">
           <input
-            class="form-control input-group-inset input-group-inset-after"
+            className="form-control input-group-inset input-group-inset-after"
             placeholder="Search for songs on Deezer..."
             type="text"
+            ref={inputRef}
           />
           <span
-            class="input-group-inset-item input-group-inset-item-after"
+            className="input-group-inset-item input-group-inset-item-after"
           >
-            <button class="btn btn-unstyled" type="button">
+            <button className="btn btn-unstyled" type="button" onClick={onClick}>
             <svg
-                class="lexicon-icon lexicon-icon-search"
+                className="lexicon-icon lexicon-icon-search"
                 focusable="false"
                 role="presentation"
               >
