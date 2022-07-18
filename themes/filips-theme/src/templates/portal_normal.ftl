@@ -99,7 +99,11 @@
 		</#if>
 	</div>
 </div>
-
+	<div id="dz-root"></div>
+<script src="https://e-cdns-files.dzcdn.net/js/min/dz.js"></script>
+	<script>
+		DZ.init();
+	</script>
 <@liferay_util["include"] page=body_bottom_include />
 
 <@liferay_util["include"] page=bottom_include />
